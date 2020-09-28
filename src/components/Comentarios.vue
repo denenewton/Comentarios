@@ -8,10 +8,11 @@
        <p><input v-model="name" type="text" name="author" placeholder="nome" class="form-control"></p>
      <p><textarea v-model="message"  name="message"  rows="5" placeholder="comentário" class="form-control"></textarea></p>
       <button v-on:click="addCommets" type="submit" class="btn btn-primary">comentar</button>
-     <div class="list-group" v-for="commet in commets" :key="commet.id">
+     <div class="list-group" v-for="(commet, index) in allComents" :key="index">
        <div class="list-group-item mt-3">
          <span class="comment__author">Autor: <strong>{{commet.nome}}</strong>  </span>
-         <p>{{commet.mens}}</p>
+         <p>{{commet.mensagem}}</p>
+         <p><a href="" class="" v-on:click.prevent="delComment(index)">Deletar</a></p>
        </div>
 
      </div>
@@ -28,39 +29,59 @@ export default {
     
     data(){
         return {
-           commets: [
-               {   
-                   id: 0,
-                   nome: 'Daniel Santos Araujo',
-                   mens: 'Gosto muito de aprender'
-               }
-
-            ],
-           name: 'daniel', 
-           message: 'fdsffsdfdsf',
-           id: 1
+           commets: [ ],// lista de comentários...
+           name: '', 
+           message: '',
+           id: 0
                 
     
         }                               
            
     },
+    props: {
+    coments: Array
+    },
 
     methods: {
                addCommets(){
-                   console.log(this.name)
-                   console.log(this.message)
-                   console.log(this.id)
-                   this.commets.push(
+                   
+                   if(this.name.trim() === " " || this.message.trim() ===''){
+                    return;
+                   }else{
+                      this.commets.push(
                        {
                        id: this.id ++,
                        nome: this.name,
-                       mens: this.message
-                       }
-                   )
+                       mensagem: this.message
+                       } )
 
+                  //  console.log(this.name)
+                   // console.log(this.message)
+                    //console.log(this.id)   
+
+                    this.name = ''   
+                    this.message = ''
+
+                   }
+                   
+
+                  
+               },
+               delComment: function(index){
+                 console.log(index)
+                    this.commets.splice(index, 1)
+                    
                }
 
 
+    }, 
+    computed: {
+      allComents: function(){
+        return this.commets.map( commet => ({
+          ...commet,
+             nome: commet.nome.trim() ==='' ? 'Anônimo': commet.nome
+        }))
+      }
     }      
 
     
