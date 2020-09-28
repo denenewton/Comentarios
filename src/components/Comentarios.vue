@@ -82,7 +82,12 @@ export default {
              nome: commet.nome.trim() ==='' ? 'Anônimo': commet.nome
         }))
       }
-    }      
+    },
+   watch: {
+     commets(val){
+       console.log('val', val)
+     }
+   }  
 
     
     
