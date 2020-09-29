@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+   
     <Comentarios />
   </div>
 </template>
@@ -11,6 +12,7 @@ export default {
   name: 'App',
   components: {
     Comentarios
+   
   }
 }
 </script>
